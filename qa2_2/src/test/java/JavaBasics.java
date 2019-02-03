@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class JavaBasics {
@@ -12,6 +13,7 @@ public class JavaBasics {
         System.out.println("Sum is " + c);
         System.out.println("Sum is " + d);
 
+        Assertions.assertEquals(25, c, "Sum is not correct!");
     }
 
     private Integer sumDigits(int a, int b){
