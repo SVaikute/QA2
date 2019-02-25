@@ -60,9 +60,7 @@ public class ArticleTest {
         WebElement commentCount = driver.findElement(COMMENT_COUNT_HOME_PAGE);
 
         String txtCommentCount = commentCount.getText();
-        txtCommentCount = txtCommentCount.replace("(", "");
-        txtCommentCount = txtCommentCount.replace(")", "");
-        System.out.println(txtCommentCount);
+        txtCommentCount = removeBrackets(txtCommentCount);
 
         WebElement homePageTitle = driver.findElement(TITLE);
         homePageTitle.click();
@@ -70,25 +68,31 @@ public class ArticleTest {
         WebElement articleCommentCount = driver.findElement(COMMENT_ARTICLE_PAGE);
 
         String txtArticleCommentCount = articleCommentCount.getText();
-        txtArticleCommentCount = txtArticleCommentCount.replace("(", "");
-        txtArticleCommentCount = txtArticleCommentCount.replace(")", "");
-        System.out.println(txtArticleCommentCount);
+        txtArticleCommentCount = removeBrackets(txtArticleCommentCount);
 
         Assertions.assertEquals(txtCommentCount, txtArticleCommentCount, "Wrong Comment count!");
 
         articleCommentCount.click();
 
         List<WebElement> counts = driver.findElements(COMMENT_COUNT_COMMENT_PAGE);
-        int sum = 0;
-        for (WebElement li : counts) {
-            System.out.println(li.getText());
-            String s = li.getText().replace("(", "");
-            sum = sum + Integer.parseInt(s.replace(")", ""));
+        int commentsSum = 0;
+        for (WebElement list : counts) {
+            System.out.println(list.getText());
+            String s = list.getText().replace("(", "");
+            commentsSum = commentsSum + Integer.parseInt(s.replace(")", ""));
         }
 
-        System.out.println(sum);
-        String txtComments = Integer.toString(sum);
+        System.out.println(commentsSum);
+        String txtComments = Integer.toString(commentsSum);
         Assertions.assertEquals(txtCommentCount, txtComments, "Wrong Comment count!");
+
+    }
+
+    private String removeBrackets(String txtCommentCountWithBrackets) {
+        txtCommentCountWithBrackets = txtCommentCountWithBrackets.replace("(", "");
+        txtCommentCountWithBrackets = txtCommentCountWithBrackets.replace(")", "");
+        System.out.println(txtCommentCountWithBrackets);
+        return txtCommentCountWithBrackets;
 
     }
 
