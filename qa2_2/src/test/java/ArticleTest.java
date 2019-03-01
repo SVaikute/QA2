@@ -18,7 +18,7 @@ public class ArticleTest {
     private final By COMMENT_PAGE_TITLE = By.xpath(".//h1[@class='article-title']/a");
     private final By COMMENT_COUNT_HOME_PAGE = By.xpath(".//a[contains(@class, 'comment-count')]");
     private final By COMMENT_COUNT_COMMENT_PAGE = By.xpath(".//span[@class='type-cnt']");
-
+    private final By BTN_READ_COMMENTS = By.className("input-read");
     private WebDriver driver;
 
     @BeforeEach
@@ -57,41 +57,82 @@ public class ArticleTest {
     @Test
     public void articleCommentCountCheck() {
 
-        WebElement commentCount = driver.findElement(COMMENT_COUNT_HOME_PAGE);
-
-        String txtCommentCount = commentCount.getText();
-        txtCommentCount = removeBrackets(txtCommentCount);
+        String txtCommentCount = isPresent(COMMENT_COUNT_HOME_PAGE);
 
         WebElement homePageTitle = driver.findElement(TITLE);
         homePageTitle.click();
 
-        WebElement articleCommentCount = driver.findElement(COMMENT_ARTICLE_PAGE);
-
-        String txtArticleCommentCount = articleCommentCount.getText();
-        txtArticleCommentCount = removeBrackets(txtArticleCommentCount);
+        String txtArticleCommentCount = isPresent(COMMENT_ARTICLE_PAGE);
 
         Assertions.assertEquals(txtCommentCount, txtArticleCommentCount, "Wrong Comment count!");
 
-        articleCommentCount.click();
+        WebElement btnReadComments = driver.findElement(BTN_READ_COMMENTS);
+        btnReadComments.click();
 
-        List<WebElement> counts = driver.findElements(COMMENT_COUNT_COMMENT_PAGE);
+        String txtComments = calculateCommentsOnCommentPage(COMMENT_COUNT_COMMENT_PAGE);
+        Assertions.assertEquals(txtCommentCount, txtComments, "Wrong Comment count!");
+
+    }
+
+    @Test
+    public void articleTitleAndCommentCountCheck() {
+        WebElement homePageTitle = driver.findElement(TITLE);
+        String txtHomePageTitle = homePageTitle.getText();
+        String txtCommentCount = isPresent(COMMENT_COUNT_HOME_PAGE);
+        homePageTitle.click();
+
+        WebElement articlePageTitle = driver.findElement(ARTICLE_PAGE_TITLE);
+        String txtArticlePageTitle = articlePageTitle.getText();
+        Assertions.assertEquals(txtHomePageTitle, txtArticlePageTitle, "Article Title is wrong");
+
+        String txtArticleCommentCount = isPresent(COMMENT_ARTICLE_PAGE);
+        Assertions.assertEquals(txtCommentCount, txtArticleCommentCount, "Wrong Comment count!");
+
+        WebElement btnReadComments = driver.findElement(BTN_READ_COMMENTS);
+        btnReadComments.click();
+
+        WebElement commentPageTile = driver.findElement(COMMENT_PAGE_TITLE);
+        String txtCommentPageTitle = commentPageTile.getText();
+        Assertions.assertEquals(txtHomePageTitle, txtCommentPageTitle, "Comment Page Article Title is wrong");
+
+        String txtComments = calculateCommentsOnCommentPage(COMMENT_COUNT_COMMENT_PAGE);
+        Assertions.assertEquals(txtCommentCount, txtComments, "Wrong Comment count!");
+    }
+
+    private String calculateCommentsOnCommentPage(By commentLocator) {
+        String txtCommentCount;
         int commentsSum = 0;
+
+        List<WebElement> counts = driver.findElements(commentLocator);
         for (WebElement list : counts) {
             System.out.println(list.getText());
             String s = list.getText().replace("(", "");
             commentsSum = commentsSum + Integer.parseInt(s.replace(")", ""));
         }
-
         System.out.println(commentsSum);
-        String txtComments = Integer.toString(commentsSum);
-        Assertions.assertEquals(txtCommentCount, txtComments, "Wrong Comment count!");
+        txtCommentCount = Integer.toString(commentsSum);
+        return txtCommentCount;
+    }
 
+
+    private String isPresent(By commentLocator) {
+        String txtCommentCount;
+        Boolean commentIsPresent = driver.findElements(commentLocator).size() > 0;
+        if (commentIsPresent == true) {
+            WebElement commentCount = driver.findElement(commentLocator);
+
+            txtCommentCount = commentCount.getText();
+            txtCommentCount = removeBrackets(txtCommentCount);
+        } else {
+            txtCommentCount = "0";
+        }
+        return txtCommentCount;
     }
 
     private String removeBrackets(String txtCommentCountWithBrackets) {
         txtCommentCountWithBrackets = txtCommentCountWithBrackets.replace("(", "");
         txtCommentCountWithBrackets = txtCommentCountWithBrackets.replace(")", "");
-        System.out.println(txtCommentCountWithBrackets);
+        System.out.println("Comment count is " + txtCommentCountWithBrackets);
         return txtCommentCountWithBrackets;
 
     }
