@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.List;
 
 public class ArticleTest {
-    private final String URL = "https://www.delfi.lv";
+    private final String URL = "http://www.delfi.lv";
     private final By TITLE = By.xpath(".//h1[contains(@class, 'headline__title')]");
     private final By ARTICLE_PAGE_TITLE = By.xpath(".//h1[contains(@class, 'd-inline')]");
     private final By COMMENT_ARTICLE_PAGE = By.xpath(".//a[contains(@class, 'text-red-ribbon')]");
@@ -64,7 +64,7 @@ public class ArticleTest {
 
         String txtArticleCommentCount = isPresent(COMMENT_ARTICLE_PAGE);
 
-        Assertions.assertEquals(txtCommentCount, txtArticleCommentCount, "Wrong Comment count!");
+        Assertions.assertEquals(txtCommentCount, txtArticleCommentCount, "Wrong Comment count! Comment count on home page does not match comment count on Article page");
 
         WebElement btnReadComments = driver.findElement(BTN_READ_COMMENTS);
         btnReadComments.click();
@@ -74,32 +74,8 @@ public class ArticleTest {
 
     }
 
-    @Test
-    public void articleTitleAndCommentCountCheck() {
-        WebElement homePageTitle = driver.findElement(TITLE);
-        String txtHomePageTitle = homePageTitle.getText();
-        String txtCommentCount = isPresent(COMMENT_COUNT_HOME_PAGE);
-        homePageTitle.click();
 
-        WebElement articlePageTitle = driver.findElement(ARTICLE_PAGE_TITLE);
-        String txtArticlePageTitle = articlePageTitle.getText();
-        Assertions.assertEquals(txtHomePageTitle, txtArticlePageTitle, "Article Title is wrong");
-
-        String txtArticleCommentCount = isPresent(COMMENT_ARTICLE_PAGE);
-        Assertions.assertEquals(txtCommentCount, txtArticleCommentCount, "Wrong Comment count!");
-
-        WebElement btnReadComments = driver.findElement(BTN_READ_COMMENTS);
-        btnReadComments.click();
-
-        WebElement commentPageTile = driver.findElement(COMMENT_PAGE_TITLE);
-        String txtCommentPageTitle = commentPageTile.getText();
-        Assertions.assertEquals(txtHomePageTitle, txtCommentPageTitle, "Comment Page Article Title is wrong");
-
-        String txtComments = calculateCommentsOnCommentPage(COMMENT_COUNT_COMMENT_PAGE);
-        Assertions.assertEquals(txtCommentCount, txtComments, "Wrong Comment count!");
-    }
-
-    private String calculateCommentsOnCommentPage(By commentLocator) {
+    public String calculateCommentsOnCommentPage(By commentLocator) {
         String txtCommentCount;
         int commentsSum = 0;
 
