@@ -1,4 +1,7 @@
 
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 
+
 public class ArticleTest {
     private final String URL = "http://www.delfi.lv";
     private final By TITLE = By.xpath(".//h1[contains(@class, 'headline__title')]");
@@ -20,6 +24,7 @@ public class ArticleTest {
     private final By COMMENT_COUNT_COMMENT_PAGE = By.xpath(".//span[@class='type-cnt']");
     private final By BTN_READ_COMMENTS = By.className("input-read");
     private WebDriver driver;
+    private final Logger LOGGER = LogManager.getLogger(ArticleTest.class);
 
     @BeforeEach
     public void openHomePage() {
@@ -32,6 +37,7 @@ public class ArticleTest {
 
     @Test
     public void articleTitleCheck() {
+        LOGGER.info("we are starting our test!");
 
         WebElement homePageTile = driver.findElement(TITLE);
         String txtHomePageTitle = homePageTile.getText();

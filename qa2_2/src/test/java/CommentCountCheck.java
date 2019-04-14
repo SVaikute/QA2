@@ -33,11 +33,13 @@ public class CommentCountCheck {
     @Test
     public void commentCountCheck() {
 
+        Integer index = 3;
+
         List<WebElement> articles = driver.findElements(ARTICLE);
-        Article article = getArticle(articles, 3);
+        Article article = getArticle(articles, index);
         String articleTitle = article.getTitle();
         Integer articleCommentCount = article.getCommentCount();
-        articles.get(3).click();
+        articles.get(index).click();
 
         List<WebElement> articlesOnArticlePage = driver.findElements(ARTICLE);
         Article articleOnArticlePage = getArticle(articlesOnArticlePage, 0);
@@ -72,6 +74,7 @@ public class CommentCountCheck {
         return commentsSum;
     }
 
+
     private Article getArticle(List<WebElement> elements, int i) {
         WebElement article = elements.get(i);
 
@@ -87,6 +90,8 @@ public class CommentCountCheck {
 
         return currArticle;
     }
+
+
 
     @AfterEach
     public void browserClose() {
