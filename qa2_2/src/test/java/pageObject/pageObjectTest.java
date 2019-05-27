@@ -11,6 +11,7 @@ public class pageObjectTest {
 
     @Test
     public void delfiTest() {
+        baseFunctions = new BaseFunctions();
         baseFunctions.goToUrl(URL);
         HomePage homePage = new HomePage(baseFunctions);
         homePage.openArticleByIndex(5);

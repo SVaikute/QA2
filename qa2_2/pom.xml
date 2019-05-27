@@ -32,6 +32,26 @@
         <artifactId>log4j-core</artifactId>
         <version>2.11.2</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+    <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-java</artifactId>
+        <version>4.3.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
+    <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-junit</artifactId>
+        <version>4.3.1</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-rest-webmvc -->
+    <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-rest-webmvc</artifactId>
+        <version>3.1.8.RELEASE</version>
+    </dependency>
+
 
 </dependencies>
 

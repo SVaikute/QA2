@@ -13,7 +13,7 @@ public class BaseFunctions {
 
     public BaseFunctions() {
         System.setProperty("webdriver.chrome.driver", "D:/projects/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
 
