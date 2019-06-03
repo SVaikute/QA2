@@ -3,6 +3,10 @@ package weather;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.jupiter.api.Assertions;
+import weather.model.Response;
+
+import java.io.IOException;
 
 
 public class WeatherStepDefs {
@@ -10,6 +14,7 @@ public class WeatherStepDefs {
 
     private String country;
     private String city;
+    private Response response;
 
     @Given("country: ([a-z]*)")
     public void set_country(String country) {
@@ -22,8 +27,9 @@ public class WeatherStepDefs {
     }
 
     @When("we are requesting weather data")
-    public void request_weather_data() {
-
+    public void request_weather_data() throws IOException {
+        WeatherRequester weatherRequester = new WeatherRequester();
+        response = weatherRequester.requestWeather(country, city);
     }
 
     @Then("longitude is (.*)")
