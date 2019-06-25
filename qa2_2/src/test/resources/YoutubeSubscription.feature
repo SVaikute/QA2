@@ -12,5 +12,3 @@ Feature: Test youtube subscription functionality
     And choose to subscribe to channel on channels page
     Then Verify Subscriptions are available on main menu page
     And Verify Subscriptions are available on subscriptions page
-    And he removes all subscriptions from subscription page
-    And closes browser

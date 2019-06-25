@@ -1,6 +1,4 @@
 package pageObject.pages;
-
-import cucumber.api.java.en.Given;
 import org.openqa.selenium.By;
 
 

@@ -1,5 +1,6 @@
 package CucumberStepDefinitions;
 
+import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -16,11 +17,6 @@ public class YoutubeSubscriptionStepDefs {
     private BaseFunctions baseFunctions;
     List<String> subscriptionTitles;
 
-    @Given("Print test annotation(.*)")
-    public void print_test_annotation(String annotation) {
-        System.out.println(annotation);
-    }
-
 
     @Given("user is on Home page")
     public void user_is_on_Home_page() throws InterruptedException {
@@ -36,10 +32,9 @@ public class YoutubeSubscriptionStepDefs {
 
     @When("he search for (.*) at search field")
     public void he_search_for_channel_at_search_field(String text) {
-        // Write code here that turns the phrase above into concrete actions
         HomePage homePage = new HomePage(baseFunctions);
-        homePage.clickOnButton(homePage.LNK_HOME);
         homePage.searchForVideo(text);
+        baseFunctions.reloadScreen();
     }
 
     @When("choose to subscribe to channel with index {int} at search results page")
@@ -100,20 +95,18 @@ public class YoutubeSubscriptionStepDefs {
         homePage.navigateToSubscriptions();
 
         SubscriptionsPage subscriptionsPage = new SubscriptionsPage(baseFunctions);
+        subscriptionsPage.navigateToManageSubscription();
         subscriptionsPage.verifySubscription(subscriptionTitles);
     }
 
-    @Then("he removes all subscriptions from subscription page")
-    public void remove_all_subscriptions_from_subscription_page() {
+    @After
+    public void close_browser_and_remove_subscriptions() {
         HomePage homePage = new HomePage(baseFunctions);
         homePage.navigateToSubscriptions();
 
         SubscriptionsPage subscriptionsPage = new SubscriptionsPage(baseFunctions);
         subscriptionsPage.removeSubsriptions();
-    }
-
-    @Then("closes browser")
-    public void closes_browser() {
         baseFunctions.closeBrowser();
     }
+
 }

@@ -80,6 +80,7 @@ public class YoutubeSubscriptionTest {
 
         LOGGER.info("12. Verify subscription");
         SubscriptionsPage subscriptionsPage = new SubscriptionsPage(baseFunctions);
+        subscriptionsPage.navigateToManageSubscription();
         subscriptionsPage.verifySubscription(subscriptionTitles);
 
         LOGGER.info("13. Navigate to man menu");
@@ -88,19 +89,17 @@ public class YoutubeSubscriptionTest {
         LOGGER.info("14. Verify subscription");
         homePage.verifySubscription(subscriptionTitles);
 
-        LOGGER.info("15. Navigate to subscriptions");
-
-        homePage.navigateToSubscriptions();
-        LOGGER.info("16. Navigate to subscriptions");
-        subscriptionsPage = new SubscriptionsPage(baseFunctions);
-        subscriptionsPage.removeSubsriptions();
-
-
 
     }
 
     @AfterEach
     public void closeBrowser() {
+        LOGGER.info("15. Navigate to subscriptions");
+        HomePage homePage = new HomePage(baseFunctions);
+        homePage.navigateToSubscriptions();
+        LOGGER.info("16. Remove subscriptions");
+        SubscriptionsPage subscriptionsPage = new SubscriptionsPage(baseFunctions);
+        subscriptionsPage.removeSubsriptions();
         baseFunctions.closeBrowser();
     }
 }

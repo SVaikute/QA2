@@ -1,6 +1,5 @@
 package pageObject.pages;
 
-import cucumber.api.java.en.Given;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -54,11 +53,6 @@ public class BaseFunctions {
 
     }
 
-    public void clickOnElementByIndex(By locator, int index) {
-
-        List<WebElement> elements = getListOfWebElements(locator);
-        elements.get(index).click();
-    }
 
     public void clickOnElement(By locator) {
         List<WebElement> elements = getListOfWebElements(locator);

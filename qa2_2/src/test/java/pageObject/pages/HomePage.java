@@ -14,7 +14,6 @@ public class HomePage {
     public final By TXT_NAME = By.id("search");
     public final By LNK_SUBSCRIPTIONS = By.xpath(".//a[@title='Subscriptions']");
     public final By LNK_HOME = By.id("logo-icon-container");
-    public final By MANAGE = By.xpath(".//paper-button[@aria-label='Manage']");
     public final By SUBSCRIPTION_ON_MAIN = By.xpath(".//ytd-guide-section-renderer//span[contains(@class, 'title style-scope ytd-guide-entry-renderer')]");
     public final By BTN_SEARCH = By.id("search-icon-legacy");
     private BaseFunctions baseFunctions;
@@ -53,7 +52,7 @@ public class HomePage {
     public void navigateToSubscriptions() {
         clickOnButton(LNK_HOME);
         clickOnButton(LNK_SUBSCRIPTIONS);
-        clickOnButton(MANAGE);
     }
+
 
 }
